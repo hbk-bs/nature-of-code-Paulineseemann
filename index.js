@@ -3,7 +3,10 @@ let clouds = [];
 
 function setup() {
   createCanvas(600, 400);
+  colorMode(HSL, 360, 100, 100, 255);
+  noStroke();
   generateSunset();
+  drawSunset(); // Nur einmal zeichnen
 }
 
 function generateSunset() {
@@ -12,81 +15,78 @@ function generateSunset() {
   humidity = random(0, 1);
   clouds = [];
 
-  // Erstelle Wolken basierend auf Luftfeuchtigkeit
-  let cloudCount = floor(lerp(1, 15, humidity));
+  let cloudCount = floor(lerp(5, 20, humidity));
   for (let i = 0; i < cloudCount; i++) {
-    clouds.push({
+    let cloud = {
       x: random(width),
       y: random(height * 0.05, height * 0.5),
-      w: random(60, 150),
-      h: random(30, 60),
-      speed: random(0.1, 0.5),
-      alpha: lerp(50, 180, humidity)
-    });
-  }
-}
+      w: random(80, 160),
+      h: random(40, 80),
+      alpha: lerp(10, 40, humidity),
+      blobs: []
+    };
 
-function draw() {
-  drawSunset();
-  updateClouds();
+    for (let j = 0; j < 80; j++) {
+      cloud.blobs.push({
+        offsetX: random(-cloud.w / 2, cloud.w / 2),
+        offsetY: random(-cloud.h / 2, cloud.h / 2),
+        size: random(cloud.w * 0.4, cloud.w * 0.7)
+      });
+    }
+
+    clouds.push(cloud);
+  }
 }
 
 function drawSunset() {
-  noStroke();
-
   // Hintergrund
   for (let y = 0; y < height; y++) {
     let t = y / height;
-
-    let r = lerp(100, 255, t * pollution + 0.2);
-    let g = lerp(50, 200, t * (1 - pollution));
-    let b = lerp(100, 255 * (1 - humidity), t * (1 - sunHeight));
-
-    fill(r, g, b);
+    let hue = lerp(20, 50, t);
+    let saturation = lerp(60, 100, 1 - pollution);
+    let lightness = lerp(20, 90, t * (1 - humidity) * sunHeight);
+    fill(hue, saturation, lightness);
     rect(0, y, width, 1);
   }
 
-  // Wolken
   drawClouds();
+  drawSun();
+}
 
-  // Sonne
+function drawSun() {
   let sunY = lerp(height * 0.3, height * 0.9, 1 - sunHeight);
-  let sunR = 255;
-  let sunG = lerp(150, 80, pollution + (1 - sunHeight));
-  let sunB = lerp(0, 30, 1 - sunHeight);
-  fill(color(sunR, sunG, sunB, 255));
-  noStroke();
-  ellipse(width / 2, sunY, 80, 80);
+  let sunHue = 40;
+  let sunSat = lerp(80, 40, pollution);
+  let sunLight = lerp(90, 60, 1 - sunHeight);
 
-  // Text
-  fill(255);
-  textSize(14);
-  textAlign(LEFT, TOP);
-  text(`☀️ Sonnenstand: ${sunHeight.toFixed(2)}
-🌫️ Verschmutzung: ${pollution.toFixed(2)}
-💧 Feuchtigkeit: ${humidity.toFixed(2)}
-🖱️ Klicke für neuen Sonnenuntergang`, 10, 10);
+  for (let r = 200; r > 80; r -= 10) {
+    let alpha = map(r, 200, 80, 10, 60);
+    fill(sunHue, sunSat, sunLight, alpha);
+    ellipse(width / 2, sunY, r, r);
+  }
+
+  fill(sunHue, sunSat, sunLight, 255);
+  ellipse(width / 2, sunY, 80, 80);
 }
 
 function drawClouds() {
   for (let c of clouds) {
-    fill(lerp(200, 255, 1 - humidity), c.alpha);
-    noStroke();
-    ellipse(c.x, c.y, c.w, c.h);
-    ellipse(c.x - c.w * 0.4, c.y + 10, c.w * 0.6, c.h * 0.8);
-    ellipse(c.x + c.w * 0.4, c.y + 5, c.w * 0.7, c.h * 0.6);
-  }
-}
+    let hue = 0;
+    let sat = 0;
+    let light = lerp(70, 90, 1 - humidity);
+    fill(hue, sat, light, c.alpha);
 
-function updateClouds() {
-  for (let c of clouds) {
-    c.x += c.speed;
-    if (c.x - c.w > width) {
-      c.x = -c.w; // Wieder von links erscheinen
+    for (let b of c.blobs) {
+      ellipse(c.x + b.offsetX, c.y + b.offsetY, b.size, b.size * 0.6);
     }
   }
 }
 
+function draw() {
+  // leer
+}
+
 function mousePressed() {
   generateSunset();
+  drawSunset();
 }

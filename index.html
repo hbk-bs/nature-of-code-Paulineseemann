@@ -1,56 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>index</title>
-	<style>
-		/* Basic styles for readability */
-		body {
-			font-family: sans-serif;
-			max-width: 800px;
-			margin: 2em auto;
-			padding: 0 1em;
-			line-height: 1.6;
-		}
-		img { max-width: 100%; height: auto; }
-		pre { background-color: #f4f4f4; padding: 1em; overflow-x: auto; }
-		code { font-family: monospace; }
-	</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nature in Code – Sonnenuntergänge</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-	<!--
-You can add style tags and also script:src tags into markdown
-if you use https://marketplace.cursorapi.com/items?itemName=fmoronzirfas.markdown-to-html
-It will be included into your html file
-Just make sure to keep a line break between the markdown tags and the style/script tags
--->
-<style>
-html,
-body {
-height: 100%;
-}
 
-body {
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-}
-main {
-height: 100%;
-display: flex;
-justify-content: center;
-flex-direction: column;
-align-items: flex-end;
-}
-</style>
+  <main>
+    <section id="section1">
+      <h1>Nature in Code</h1>
+      <h3>Sonnenuntergänge als digitales Naturphänomen</h3>
+    </section>
 
-<main>
-<div id="sketch"></div>
-<script src="lib/p5.min.js"></script>
-<script src="index.js"></script>
-</main>
+    <section id="section2">
+      <h2>Aufgabenstellung & Idee</h2>
+      <p>
+        In diesem Projekt ging es darum, im Rahmen der Exkursion nach Amrum ein natürliches System zu beobachten und es anschließend in Code zu übersetzen.
+        Ich habe mich für Sonnenuntergänge entschieden – ein alltägliches Phänomen, das immer nach bestimmten Prinzipien abläuft
+        (z.&nbsp;B. Lichtbrechung, Atmosphäre, Sonnenstand), aber dennoch jedes Mal anders aussieht. Auf Amrum gab es ein paar besonders schöne Exemplare zu sehen...
+       <img src="https://hbk-bs.github.io/nature-of-code-Paulineseemann/IMG_5683.HEIC" alt="bild" width="100">
+       <img src="https://hbk-bs.github.io/nature-of-code-Paulineseemann/IMG_5683.HEIC" alt="bild" width="100">
+       <img src="https://hbk-bs.github.io/nature-of-code-Paulineseemann/IMG_5683.HEIC" alt="bild" width="100">
+       <img src="https://hbk-bs.github.io/nature-of-code-Paulineseemann/IMG_5683.HEIC" alt="bild" width="100">
+       <img src="https://hbk-bs.github.io/nature-of-code-Paulineseemann/IMG_5683.HEIC" alt="bild" width="100">
 
+
+        </p>
+    </section>
+
+    <section id="section3">
+      <h2>Code-basierte Umsetzung</h2>
+      <p>
+        Der JavaScript-Sketch generiert digitale Sonnenuntergänge mithilfe von Code. Dabei wird der Himmel algorithmisch gezeichnet,
+        basierend auf zufällig bestimmten Werten für Sonnenstand, Luftfeuchtigkeit und Verschmutzung.
+        So entsteht bei jedem Klick ein neuer, einzigartiger Moment; eine Übersetzung natürlicher Atmosphäre in visuelle Daten.
+      </p>
+
+     
+
+      <p>
+        ☀️ Sonnenstand – beeinflusst die Position und Farbe der Sonne<br>
+        🌫️ Verschmutzung – verändert die Sättigung und Tönung des Himmels<br>
+        💧 Feuchtigkeit – bestimmt die Dichte und Weichheit der Wolken<br>
+        🖱️ Klicke in das Bild, um einen neuen Sonnenuntergang zu generieren
+      </p>
+    </section>
+
+    
+  </main>
+
+  <script src="lib/p5.min.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
+<section id="section4">
+      <footer>
+        Pauline Seemann, Digitale Grundlagen, Visuelle Kommunikation, HBK Braunschweig
+      </footer>
+    </section>
