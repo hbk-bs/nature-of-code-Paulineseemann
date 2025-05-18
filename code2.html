@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Abstrakte Darstellung von Sonnenuntergang</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #141a2b;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: #ccc;
+    }
+    canvas {
+      display: block;
+      border: 1px solid #333;
+      background: #141a2b;
+    }
+  
+  </style>
+</head>
+<body>
+<script>
+let sunHeight, pollution, humidity;
+let cols = 20;
+let rows = 15;
+let spacingX, spacingY;
+
+function setup() {
+  createCanvas(600, 400);
+  colorMode(HSL, 360, 100, 100, 255);
+  spacingX = width / (cols - 1);
+  spacingY = height / (rows - 1);
+  noFill();
+  noStroke();
+  generateParameters();
+}
+
+function generateParameters() {
+  sunHeight = random(0.1, 1);     // 0 = tief, 1 = hoch
+  pollution = random(0, 1);       // 0 = sauber, 1 = stark verschmutzt
+  humidity = random(0, 1);        // 0 = trocken, 1 = feucht
+}
+
+function draw() {
+  background(20, 30, 50);  // dunkles Blau als Basis (Nacht/Himmel)
+  
+  strokeWeight(1);
+  
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      let posX = x * spacingX;
+      let posY = y * spacingY;
+      
+      let waveAmplitude = lerp(10, 60, sunHeight);
+      let wave = sin(TWO_PI * (x / cols) + frameCount * 0.02) * waveAmplitude;
+      posY += wave;
+      
+      let baseSize = lerp(4, 12, humidity);
+      
+      let hueClean = 200;
+      let huePolluted = 10;
+      let hue = lerp(hueClean, huePolluted, pollution);
+      
+      let sat = lerp(90, 40, pollution);
+      
+      let light = lerp(50, 80, humidity);
+      
+      let alpha = lerp(255, 100, humidity);
+      
+      noStroke();
+      fill(hue, sat, light, alpha);
+      ellipse(posX, posY, baseSize, baseSize);
+      
+      stroke(hue, sat, light, alpha * 0.5);
+      strokeWeight(lerp(0.5, 2, pollution));
+      
+      if (x < cols - 1) {
+        let nx = (x + 1) * spacingX;
+        let ny = y * spacingY + sin(TWO_PI * ((x + 1) / cols) + frameCount * 0.02) * waveAmplitude;
+        line(posX, posY, nx, ny);
+      }
+      if (y < rows - 1) {
+        let nx = x * spacingX;
+        let ny = (y + 1) * spacingY + sin(TWO_PI * (x / cols) + frameCount * 0.02) * waveAmplitude;
+        line(posX, posY, nx, ny);
+      }
+    }
+  }
+}
+
+function mousePressed() {
+  generateParameters();
+}
+</script>
+
+<a href="index.html">🔙 Zurück zur Startseite</a>
+<br> 
+<br></body>
+</html>

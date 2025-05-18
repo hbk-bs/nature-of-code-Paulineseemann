@@ -42,12 +42,13 @@ function drawSunset() {
   // Hintergrund
   for (let y = 0; y < height; y++) {
     let t = y / height;
-    let hue = lerp(20, 50, t);
-    let saturation = lerp(60, 100, 1 - pollution);
-    let lightness = lerp(20, 90, t * (1 - humidity) * sunHeight);
+    let hue = lerp(10, 45, t); // 10° = warmes Orange-Rot, 45° = Gelb-Orange
+    let saturation = lerp(70, 100, 1 - pollution); // hohe Sättigung, weniger Pollution
+    let lightness = lerp(15, 80, t * (1 - humidity) * sunHeight); // Heller nach unten hin
     fill(hue, saturation, lightness);
     rect(0, y, width, 1);
   }
+  
 
   drawClouds();
   drawSun();
@@ -55,7 +56,7 @@ function drawSunset() {
 
 function drawSun() {
   let sunY = lerp(height * 0.3, height * 0.9, 1 - sunHeight);
-  let sunHue = 40;
+  let sunHue = 50;
   let sunSat = lerp(80, 40, pollution);
   let sunLight = lerp(90, 60, 1 - sunHeight);
 
@@ -89,4 +90,22 @@ function draw() {
 function mousePressed() {
   generateSunset();
   drawSunset();
+}
+function drawSun() {
+  let sunY = lerp(height * 0.3, height * 0.9, 1 - sunHeight);
+
+  // Farbe der Sonne dynamisch basierend auf Parametern
+  let sunHue = lerp(10, 50, sunHeight); // tiefere Sonne = röter, höhere = gelber
+  sunHue = lerp(sunHue, 5, pollution); // bei hoher Verschmutzung mehr Rotstich
+  let sunSat = lerp(90, 40, pollution); // mehr Pollution = weniger Sättigung
+  let sunLight = lerp(95, 60, 1 - sunHeight); // höher = heller
+
+  for (let r = 200; r > 80; r -= 10) {
+    let alpha = map(r, 200, 80, 10, 60);
+    fill(sunHue, sunSat, sunLight, alpha);
+    ellipse(width / 2, sunY, r, r);
+  }
+
+  fill(sunHue, sunSat, sunLight, 255);
+  ellipse(width / 2, sunY, 80, 80);
 }
