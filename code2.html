@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      background: #141a2b;
+    
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -46,7 +46,7 @@ let spacingX, spacingY;
 
 function setup() {
   createCanvas(600, 400);
-  colorMode(HSL, 360, 100, 100, 255);
+  colorMode(HSL, 360, 100, 100, 255)
   spacingX = width / (cols - 1);
   spacingY = height / (rows - 1);
   noFill();
@@ -61,7 +61,7 @@ function generateParameters() {
 }
 
 function draw() {
-  background(20, 30, 50);  // dunkles Blau als Basis (Nacht/Himmel)
+  background(0, 0, 0);  // dunkles Blau als Basis (Nacht/Himmel)
   
   strokeWeight(1);
   
