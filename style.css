@@ -133,3 +133,11 @@ footer {
   font-size: 0.9rem;
 }
 
+#foto {
+  width: 8%;
+  display: block;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50px;
+  padding: 16px;}
